@@ -4,23 +4,23 @@ services:
   - docker
 
 before_install:
-  - docker build -t paduris/react-test -f ./client/Dockerfile.dev ./client
+  - docker build -t spaduri/react-test -f ./client/Dockerfile.dev ./client
 
 script:
-  - docker run -e CI=true paduris/react-test npm test -- --coverage
+  - docker run -e CI=true spaduri/react-test npm test -- --coverage
 
 after_success:
-  - docker build -t paduris/multi-client ./client
-  - docker build -t paduris/multi-nginx ./nginx
-  - docker build -t paduris/multi-server ./server
-  - docker build -t paduris/multi-worker ./worker
+  - docker build -t spaduri/multi-client ./client
+  - docker build -t spaduri/multi-nginx ./nginx
+  - docker build -t spaduri/multi-server ./server
+  - docker build -t spaduri/multi-worker ./worker
   # Log in to the docker CLI
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   # Take those images and push them to docker hub
-  - docker push paduris/multi-client
-  - docker push paduris/multi-nginx
-  - docker push paduris/multi-server
-  - docker push paduris/multi-worker
+  - docker push spaduri/multi-client
+  - docker push spaduri/multi-nginx
+  - docker push spaduri/multi-server
+  - docker push spaduri/multi-worker
 
 deploy:
   provider: elasticbeanstalk
