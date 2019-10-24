@@ -10,24 +10,24 @@ script:
   - docker run -e CI=true paduris/react-test npm test -- --coverage
 
 after_success:
-  - docker build -t stephengrider/multi-client ./client
-  - docker build -t stephengrider/multi-nginx ./nginx
-  - docker build -t stephengrider/multi-server ./server
-  - docker build -t stephengrider/multi-worker ./worker
+  - docker build -t paduris/multi-client ./client
+  - docker build -t paduris/multi-nginx ./nginx
+  - docker build -t paduris/multi-server ./server
+  - docker build -t paduris/multi-worker ./worker
   # Log in to the docker CLI
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   # Take those images and push them to docker hub
-  - docker push stephengrider/multi-client
-  - docker push stephengrider/multi-nginx
-  - docker push stephengrider/multi-server
-  - docker push stephengrider/multi-worker
+  - docker push paduris/multi-client
+  - docker push paduris/multi-nginx
+  - docker push paduris/multi-server
+  - docker push paduris/multi-worker
 
 deploy:
   provider: elasticbeanstalk
   region: us-west-2
   app: multi-docker
   env: MultiDocker-env
-  bucket_name: elasticbeanstalk-us-west-1-306476627547
+  bucket_name: elasticbeanstalk-us-west-2-306476627547
   bucket_path: docker-multi
   on:
     branch: master
